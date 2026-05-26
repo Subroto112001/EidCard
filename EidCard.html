@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ঈদ কার্ড মেকার</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Noto+Serif+Bengali:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --brand: #611F69;
+      --brand-dark: #3d1242;
+      --brand-light: #8b2f97;
+      --gold: #D4AF37;
+      --gold-light: #f0d060;
+      --gold-dark: #a07c1e;
+      --white: #fffdf7;
+      --cream: #fdf6e3;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1a0520 0%, #2d0a38 40%, #1a0520 100%);
+      min-height: 100vh;
+      font-family: 'Noto Serif Bengali', serif;
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* Starfield background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        radial-gradient(circle, rgba(212, 175, 55, 0.6) 1px, transparent 1px),
+        radial-gradient(circle, rgba(212, 175, 55, 0.3) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
+      background-size: 80px 80px, 120px 120px, 60px 60px;
+      background-position: 0 0, 40px 40px, 20px 20px;
+      pointer-events: none;
+      z-index: 0;
+      animation: twinkle 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from {
+        opacity: 0.4;
+      }
+
+      to {
+        opacity: 0.8;
+      }
+    }
+
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    /* Header */
+    .site-header {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: fadeDown 0.8s ease-out;
+    }
+
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .site-header h1 {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(1.4rem, 4vw, 2.4rem);
+      color: var(--gold);
+      text-shadow: 0 0 30px rgba(212, 175, 55, 0.6), 0 2px 4px rgba(0, 0, 0, 0.5);
+      letter-spacing: 3px;
+      margin-bottom: 6px;
+    }
+
+    .site-header p {
+      font-size: 0.95rem;
+      color: rgba(212, 175, 55, 0.7);
+      letter-spacing: 2px;
+    }
+
+    .gold-divider {
+      width: 200px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 12px auto;
+    }
+
+    /* Main layout */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 30px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Control Panel */
+    .control-panel {
+      background: rgba(97, 31, 105, 0.25);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 20px;
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      animation: fadeLeft 0.8s ease-out 0.2s both;
+    }
+
+    @keyframes fadeLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .panel-section {
+      margin-bottom: 24px;
+    }
+
+    .panel-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--gold);
+      display: inline-block;
+    }
+
+    /* Upload zone */
+    .upload-zone {
+      border: 2px dashed rgba(212, 175, 55, 0.4);
+      border-radius: 14px;
+      padding: 30px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: rgba(97, 31, 105, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upload-zone:hover,
+    .upload-zone.dragover {
+      border-color: var(--gold);
+      background: rgba(212, 175, 55, 0.1);
+      transform: scale(1.01);
+    }
+
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .upload-icon {
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+    }
+
+    .upload-zone p {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .upload-zone strong {
+      color: var(--gold-light);
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    /* Text inputs */
+    .input-group {
+      margin-bottom: 14px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.82rem;
+      color: rgba(212, 175, 55, 0.8);
+      margin-bottom: 5px;
+    }
+
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 10px;
+      color: var(--white);
+      font-family: 'Noto Serif Bengali', serif;
+      font-size: 0.92rem;
+      transition: border-color 0.3s;
+      outline: none;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .input-group select option {
+      background: #2d0a38;
+      color: white;
+    }
+
+    /* Color swatches */
+    .theme-swatches {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .swatch.active,
+    .swatch:hover {
+      border-color: var(--gold);
+      transform: scale(1.15);
+    }
+
+    /* Buttons */
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+      border: none;
+      border-radius: 12px;
+      color: var(--brand-dark);
+      font-family: 'Noto Serif Bengali', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+      margin-bottom: 10px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 12px;
+      background: rgba(97, 31, 105, 0.5);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 12px;
+      color: var(--gold-light);
+      font-family: 'Noto Serif Bengali', serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(97, 31, 105, 0.8);
+      border-color: var(--gold);
+    }
+
+    /* Card Preview */
+    .card-preview-panel {
+      animation: fadeRight 0.8s ease-out 0.3s both;
+    }
+
+    @keyframes fadeRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .preview-label {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .canvas-wrapper {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.3),
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        0 0 80px rgba(97, 31, 105, 0.3);
+    }
+
+    #eidCanvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    /* Saved cards gallery */
+    .gallery-section {
+      margin-top: 40px;
+      animation: fadeUp 0.8s ease-out 0.5s both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .gallery-header h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold);
+      font-size: 1.1rem;
+    }
+
+    .btn-clear {
+      font-size: 0.78rem;
+      padding: 6px 14px;
+      background: rgba(200, 50, 50, 0.2);
+      border: 1px solid rgba(200, 50, 50, 0.4);
+      border-radius: 8px;
+      color: #ff8888;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-clear:hover {
+      background: rgba(200, 50, 50, 0.4);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      cursor: pointer;
+      transition: all 0.3s;
+      aspect-ratio: 1;
+    }
+
+    .gallery-item:hover {
+      border-color: var(--gold);
+      transform: scale(1.04);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-item .del-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: rgba(0, 0, 0, 0.7);
+      border: none;
+      color: #ff6666;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      font-size: 12px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .gallery-item:hover .del-btn {
+      display: flex;
+    }
+
+    .empty-gallery {
+      text-align: center;
+      padding: 30px;
+      color: rgba(212, 175, 55, 0.4);
+      font-size: 0.85rem;
+      border: 1px dashed rgba(212, 175, 55, 0.2);
+      border-radius: 12px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: linear-gradient(135deg, var(--brand), var(--brand-light));
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 0.88rem;
+      opacity: 0;
+      transition: all 0.4s;
+      z-index: 1000;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Range input styling */
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      background: rgba(212, 175, 55, 0.3);
+      border-radius: 2px;
+      outline: none;
+      margin-top: 6px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: var(--gold);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* Footer branding */
+    .site-footer {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(212, 175, 55, 0.18);
+      color: rgba(212, 175, 55, 0.95);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      z-index: 1200;
+      backdrop-filter: blur(6px);
+    }
+
+    .site-footer a {
+      color: var(--gold-light);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .site-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="gold-divider"></div>
+      <h1>✦ ঈদ কার্ড মেকার ✦</h1>
+      <p>আপনার ছবি দিয়ে তৈরি করুন বিশেষ ঈদ শুভেচ্ছাকার্ড</p>
+      <div class="gold-divider"></div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+
+      <!-- Control Panel -->
+      <div class="control-panel">
+
+        <div class="panel-section">
+          <div class="section-label">ছবি আপলোড করুন</div>
+          <div class="upload-zone" id="uploadZone">
+            <input type="file" id="photoInput" accept="image/*">
+            <div class="upload-icon">🖼️</div>
+            <strong>ছবি বেছে নিন</strong>
+            <p>অথবা এখানে ড্র্যাগ করুন</p>
+            <p style="font-size:0.75rem; margin-top:6px; color:rgba(212,175,55,0.5);">JPG, PNG, WEBP সাপোর্টেড</p>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <div class="section-label">আপনার তথ্য</div>
+          <div class="input-group">
+            <label>আপনার নাম</label>
+            <input type="text" id="nameInput" placeholder="আপনার নাম লিখুন" value="আপনার নাম">
+          </div>
+          <div class="input-group">
+            <label>শুভেচ্ছাবার্তা</label>
+            <input type="text" id="msgInput" placeholder="ঈদ মোবারক!" value="ঈদ মোবারক! ✨">
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <div class="section-label">কার্ড থিম</div>
+          <div class="theme-swatches">
+            <div class="swatch active" data-theme="royal" style="background: linear-gradient(135deg, #611F69, #3d1242)"
+              title="রয়্যাল পার্পল"></div>
+            <div class="swatch" data-theme="midnight" style="background: linear-gradient(135deg, #0a1628, #1a3a5c)"
+              title="মিডনাইট ব্লু"></div>
+            <div class="swatch" data-theme="emerald" style="background: linear-gradient(135deg, #0d3320, #1a5c3a)"
+              title="এমেরাল্ড"></div>
+            <div class="swatch" data-theme="crimson" style="background: linear-gradient(135deg, #4a0a14, #8b1a28)"
+              title="ক্রিমসন"></div>
+            <div class="swatch" data-theme="rose" style="background: linear-gradient(135deg, #3d0a2a, #7a1650)"
+              title="রোজ"></div>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <div class="section-label">ছবির আকার</div>
+          <input type="range" id="photoSize" min="80" max="180" value="130">
+        </div>
+
+        <div class="panel-section">
+          <button class="btn-primary" onclick="generateCard()">✦ কার্ড তৈরি করুন</button>
+          <button class="btn-secondary" onclick="downloadCard()">⬇ কার্ড ডাউনলোড করুন</button>
+          <button class="btn-secondary" style="margin-top:8px;" onclick="saveToStorage()">💾 কার্ড সেভ করুন</button>
+        </div>
+
+      </div>
+
+      <!-- Canvas Preview -->
+      <div class="card-preview-panel">
+        <div class="preview-label">✦ প্রিভিউ ✦</div>
+        <div class="canvas-wrapper">
+          <canvas id="eidCanvas" width="800" height="1000"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Gallery -->
+    <div class="gallery-section">
+      <div class="gallery-header">
+        <h3>💾 সেভ করা কার্ডগুলো</h3>
+        <button class="btn-clear" onclick="clearAll()">সব মুছুন</button>
+      </div>
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="empty-gallery">এখনো কোনো কার্ড সেভ করা হয়নি</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Footer branding -->
+  <footer class="site-footer">
+    <a href="https://skbarman.me/" target="_blank" rel="noopener noreferrer">Subroto Kumar Barman — FullStack developer
+      — skbarman.me</a>
+  </footer>
+
+  <script>
+    // ── State ────────────────────────────────────────────────────────────────────
+    let userPhoto = null;
+    let currentTheme = 'royal';
+    let isGenerated = false;
+
+    const themes = {
+      royal: { bg1: '#3d1242', bg2: '#611F69', bg3: '#8b2f97', accent: '#D4AF37', text: '#fffdf7' },
+      midnight: { bg1: '#0a1628', bg2: '#1a3a5c', bg3: '#2a5278', accent: '#D4AF37', text: '#fffdf7' },
+      emerald: { bg1: '#0d3320', bg2: '#1a5c3a', bg3: '#238a56', accent: '#D4AF37', text: '#fffdf7' },
+      crimson: { bg1: '#4a0a14', bg2: '#8b1a28', bg3: '#b22234', accent: '#D4AF37', text: '#fffdf7' },
+      rose: { bg1: '#3d0a2a', bg2: '#7a1650', bg3: '#ad2070', accent: '#D4AF37', text: '#fffdf7' }
+    };
+
+    // ── Upload Handler ────────────────────────────────────────────────────────────
+    document.getElementById('photoInput').addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const img = new Image();
+        img.onload = () => { userPhoto = img; generateCard(); };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Drag & Drop
+    const zone = document.getElementById('uploadZone');
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault(); zone.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const img = new Image();
+          img.onload = () => { userPhoto = img; generateCard(); };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Theme swatches
+    document.querySelectorAll('.swatch').forEach(s => {
+      s.addEventListener('click', () => {
+        document.querySelectorAll('.swatch').forEach(x => x.classList.remove('active'));
+        s.classList.add('active');
+        currentTheme = s.dataset.theme;
+        generateCard();
+      });
+    });
+
+    // Live update on input
+    ['nameInput', 'msgInput', 'photoSize'].forEach(id =>
+      document.getElementById(id).addEventListener('input', () => {
+        if (isGenerated || userPhoto) generateCard();
+      })
+    );
+
+    // ── Canvas Drawing ────────────────────────────────────────────────────────────
+    function generateCard() {
+      const canvas = document.getElementById('eidCanvas');
+      const ctx = canvas.getContext('2d');
+      const W = 800, H = 1000;
+      const T = themes[currentTheme];
+
+      ctx.clearRect(0, 0, W, H);
+
+      // ── Background gradient
+      const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+      bgGrad.addColorStop(0, T.bg1);
+      bgGrad.addColorStop(0.5, T.bg2);
+      bgGrad.addColorStop(1, T.bg1);
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, W, H);
+
+      // ── Radial glow center
+      const glow = ctx.createRadialGradient(W / 2, H * 0.42, 0, W / 2, H * 0.42, 420);
+      glow.addColorStop(0, 'rgba(212,175,55,0.15)');
+      glow.addColorStop(1, 'transparent');
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, W, H);
+
+      // ── Color bokeh accents
+      drawColorBokeh(ctx, W, H);
+
+      // ── Decorative geometric border
+      drawGeometricBorder(ctx, W, H, T.accent);
+
+      // ── Top mosque silhouette
+      drawMosqueSilhouette(ctx, W, H, T);
+
+      // ── Stars scatter
+      drawStars(ctx, W, H, T.accent);
+
+      // ── Crescent moon
+      drawCrescent(ctx, W / 2, 130, 55, T.accent);
+
+      // ── Top Arabic ornament line
+      drawOrnamentLine(ctx, W, 215, T.accent);
+
+      // ── "ঈদ মোবারক" main heading
+      ctx.save();
+      ctx.shadowColor = T.accent;
+      ctx.shadowBlur = 30;
+      ctx.fillStyle = T.accent;
+      ctx.font = 'bold 68px "Noto Serif Bengali", serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('ঈদ মোবারক', W / 2, 220);
+      ctx.restore();
+
+      // ── EID MUBARAK in latin
+      ctx.save();
+      ctx.fillStyle = 'rgba(212,175,55,0.6)';
+      ctx.font = '500 24px "Cinzel Decorative", cursive';
+      ctx.textAlign = 'center';
+      ctx.letterSpacing = '6px';
+      ctx.fillText('E I D   M U B A R A K', W / 2, 265);
+      ctx.restore();
+
+      // ── Photo frame area (moved lower for more gaps)
+      const photoY = 460;
+      const photoR = parseInt(document.getElementById('photoSize').value);
+
+      // Outer glow ring
+      for (let i = 4; i >= 0; i--) {
+        ctx.beginPath();
+        ctx.arc(W / 2, photoY, photoR + 28 + i * 5, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(212,175,55,${0.12 - i * 0.02})`;
+        ctx.lineWidth = 6;
+        ctx.stroke();
+      }
+
+      // Gold ring
+      const ringGrad = ctx.createLinearGradient(W / 2 - photoR - 20, photoY - photoR - 20, W / 2 + photoR + 20, photoY + photoR + 20);
+      ringGrad.addColorStop(0, '#f0d060');
+      ringGrad.addColorStop(0.25, '#a07c1e');
+      ringGrad.addColorStop(0.5, '#D4AF37');
+      ringGrad.addColorStop(0.75, '#a07c1e');
+      ringGrad.addColorStop(1, '#f0d060');
+      ctx.beginPath();
+      ctx.arc(W / 2, photoY, photoR + 18, 0, Math.PI * 2);
+      ctx.strokeStyle = ringGrad;
+      ctx.lineWidth = 8;
+      ctx.stroke();
+
+      // Inner ring
+      ctx.beginPath();
+      ctx.arc(W / 2, photoY, photoR + 8, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Diamond accents on ring
+      for (let a = 0; a < 8; a++) {
+        const angle = (a / 8) * Math.PI * 2 - Math.PI / 2;
+        const rx = W / 2 + (photoR + 18) * Math.cos(angle);
+        const ry = photoY + (photoR + 18) * Math.sin(angle);
+        ctx.save();
+        ctx.translate(rx, ry);
+        ctx.rotate(angle);
+        ctx.fillStyle = T.accent;
+        ctx.beginPath();
+        ctx.moveTo(0, -5); ctx.lineTo(3.5, 0); ctx.lineTo(0, 5); ctx.lineTo(-3.5, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Photo or placeholder
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(W / 2, photoY, photoR, 0, Math.PI * 2);
+      ctx.clip();
+
+      if (userPhoto) {
+        // Cover-style fit
+        const iw = userPhoto.width, ih = userPhoto.height;
+        const scale = Math.max(photoR * 2 / iw, photoR * 2 / ih);
+        const sw = iw * scale, sh = ih * scale;
+        ctx.drawImage(userPhoto, W / 2 - sw / 2, photoY - sh / 2, sw, sh);
+      } else {
+        // Placeholder
+        const phGrad = ctx.createRadialGradient(W / 2, photoY, 0, W / 2, photoY, photoR);
+        phGrad.addColorStop(0, 'rgba(212,175,55,0.25)');
+        phGrad.addColorStop(1, 'rgba(97,31,105,0.5)');
+        ctx.fillStyle = phGrad;
+        ctx.fillRect(W / 2 - photoR, photoY - photoR, photoR * 2, photoR * 2);
+        ctx.fillStyle = 'rgba(212,175,55,0.5)';
+        ctx.font = `${photoR * 0.55}px serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('👤', W / 2, photoY);
+      }
+      ctx.restore();
+
+      // ── Ornament line below photo
+      drawOrnamentLine(ctx, W, photoY + photoR + 40, T.accent);
+
+      // ── User Name
+      const name = document.getElementById('nameInput').value || 'আপনার নাম';
+      ctx.save();
+      ctx.shadowColor = 'rgba(212,175,55,0.8)';
+      ctx.shadowBlur = 20;
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 38px "Noto Serif Bengali", serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(name, W / 2, photoY + photoR + 110);
+      ctx.restore();
+
+      // ── Message
+      const msg = document.getElementById('msgInput').value || 'ঈদ মোবারক!';
+      ctx.save();
+      ctx.fillStyle = T.accent;
+      ctx.font = '26px "Noto Serif Bengali", serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(msg, W / 2, photoY + photoR + 160);
+      ctx.restore();
+
+      // ── Blessing text
+      ctx.save();
+      ctx.fillStyle = 'rgba(255,255,255,0.65)';
+      ctx.font = '20px "Noto Serif Bengali", serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('সৃষ্টিকর্তা আপনার জীবনকে আনন্দময় করুক', W / 2, photoY + photoR + 200);
+      ctx.fillStyle = 'rgba(212,175,55,0.8)';
+      ctx.font = '22px "Noto Serif Bengali", serif';
+      ctx.fillText('ঈদ হোক আনন্দময়', W / 2, photoY + photoR + 235);
+      ctx.restore();
+
+      // ── Bottom decorative band
+      drawBottomBand(ctx, W, H, T);
+
+      // ── Lantern icons
+      drawLanterns(ctx, W, H, T.accent);
+
+      // ── Bottom brand text
+      ctx.save();
+      ctx.fillStyle = 'rgba(212,175,55,0.5)';
+      ctx.font = '15px "Cinzel Decorative", cursive';
+      ctx.textAlign = 'center';
+      ctx.fillText('✦  EID MUBARAK  ✦', W / 2, H - 28);
+      ctx.restore();
+
+      isGenerated = true;
+    }
+
+    // ── Helper Drawing Functions ──────────────────────────────────────────────────
+
+    function drawGeometricBorder(ctx, W, H, gold) {
+      // Outer frame
+      ctx.strokeStyle = `rgba(212,175,55,0.5)`;
+      ctx.lineWidth = 3;
+      ctx.strokeRect(18, 18, W - 36, H - 36);
+
+      ctx.strokeStyle = `rgba(212,175,55,0.2)`;
+      ctx.lineWidth = 1;
+      ctx.strokeRect(26, 26, W - 52, H - 52);
+
+      // Corner ornaments
+      const corners = [[28, 28], [W - 28, 28], [28, H - 28], [W - 28, H - 28]];
+      corners.forEach(([cx, cy]) => {
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.strokeStyle = gold;
+        ctx.lineWidth = 2;
+        ctx.fillStyle = gold;
+        // Diamond
+        ctx.beginPath();
+        ctx.moveTo(0, -10); ctx.lineTo(7, 0); ctx.lineTo(0, 10); ctx.lineTo(-7, 0);
+        ctx.closePath();
+        ctx.fill();
+        // Lines
+        ctx.beginPath();
+        if (cx < W / 2 && cy < H / 2) { ctx.moveTo(12, 0); ctx.lineTo(40, 0); ctx.moveTo(0, 12); ctx.lineTo(0, 40); }
+        else if (cx > W / 2 && cy < H / 2) { ctx.moveTo(-12, 0); ctx.lineTo(-40, 0); ctx.moveTo(0, 12); ctx.lineTo(0, 40); }
+        else if (cx < W / 2 && cy > H / 2) { ctx.moveTo(12, 0); ctx.lineTo(40, 0); ctx.moveTo(0, -12); ctx.lineTo(0, -40); }
+        else { ctx.moveTo(-12, 0); ctx.lineTo(-40, 0); ctx.moveTo(0, -12); ctx.lineTo(0, -40); }
+        ctx.stroke();
+        ctx.restore();
+      });
+    }
+
+    function drawMosqueSilhouette(ctx, W, H, T) {
+      ctx.save();
+      ctx.fillStyle = `rgba(255,255,255,0.04)`;
+
+      // Main dome
+      ctx.beginPath();
+      ctx.arc(W / 2, 170, 100, Math.PI, 0);
+      ctx.lineTo(W / 2 + 100, 210);
+      ctx.lineTo(W / 2 - 100, 210);
+      ctx.closePath();
+      ctx.fill();
+
+      // Side domes
+      ctx.beginPath();
+      ctx.arc(W / 2 - 130, 195, 55, Math.PI, 0);
+      ctx.lineTo(W / 2 - 75, 225); ctx.lineTo(W / 2 - 185, 225);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(W / 2 + 130, 195, 55, Math.PI, 0);
+      ctx.lineTo(W / 2 + 185, 225); ctx.lineTo(W / 2 + 75, 225);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function drawStars(ctx, W, H, gold) {
+      const positions = [
+        [80, 120], [720, 95], [150, 220], [650, 180], [60, 400], [740, 350],
+        [100, 650], [700, 700], [50, 850], [750, 800], [200, 950], [600, 930],
+        [350, 70], [450, 85], [130, 500], [670, 480]
+      ];
+      positions.forEach(([x, y]) => {
+        const r = Math.random() < 0.5 ? 3 : 5;
+        drawStar(ctx, x, y, r, gold);
+      });
+    }
+
+    function drawStar(ctx, x, y, r, color) {
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.7;
+      ctx.beginPath();
+      for (let i = 0; i < 5; i++) {
+        const angle = (i * 4 * Math.PI / 5) - Math.PI / 2;
+        const ia = angle + Math.PI / 5;
+        i === 0 ? ctx.moveTo(x + r * Math.cos(angle), y + r * Math.sin(angle))
+          : ctx.lineTo(x + r * Math.cos(angle), y + r * Math.sin(angle));
+        ctx.lineTo(x + (r * 0.4) * Math.cos(ia), y + (r * 0.4) * Math.sin(ia));
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawCrescent(ctx, x, y, r, gold) {
+      ctx.save();
+      ctx.fillStyle = gold;
+      ctx.shadowColor = gold;
+      ctx.shadowBlur = 20;
+
+      // Outer circle
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Cut inner circle
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.beginPath();
+      ctx.arc(x + r * 0.3, y - r * 0.1, r * 0.78, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalCompositeOperation = 'source-over';
+
+      // Star next to crescent
+      ctx.globalAlpha = 1;
+      drawStar(ctx, x + r * 0.75, y - r * 0.5, 9, gold);
+
+      ctx.restore();
+    }
+
+    function drawColorBokeh(ctx, W, H) {
+      const colors = ['rgba(240,74,155,0.14)', 'rgba(109,211,255,0.12)', 'rgba(124,242,154,0.12)', 'rgba(255,179,71,0.14)'];
+      const spots = [
+        [120, 260, 90, 0], [680, 240, 110, 1], [180, 640, 120, 2],
+        [640, 690, 100, 3], [320, 160, 70, 1], [520, 540, 85, 0]
+      ];
+      spots.forEach(([x, y, r, c]) => {
+        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, colors[c]);
+        g.addColorStop(1, 'transparent');
+        ctx.fillStyle = g;
+        ctx.fillRect(x - r, y - r, r * 2, r * 2);
+      });
+    }
+
+    function drawOrnamentLine(ctx, W, y, gold) {
+      ctx.save();
+      // Left line
+      const lg = ctx.createLinearGradient(40, y, W / 2 - 80, y);
+      lg.addColorStop(0, 'transparent');
+      lg.addColorStop(1, gold);
+      ctx.strokeStyle = lg;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(40, y); ctx.lineTo(W / 2 - 80, y);
+      ctx.stroke();
+
+      // Right line
+      const rg = ctx.createLinearGradient(W / 2 + 80, y, W - 40, y);
+      rg.addColorStop(0, gold);
+      rg.addColorStop(1, 'transparent');
+      ctx.strokeStyle = rg;
+      ctx.beginPath();
+      ctx.moveTo(W / 2 + 80, y); ctx.lineTo(W - 40, y);
+      ctx.stroke();
+
+      // Center diamond
+      ctx.fillStyle = gold;
+      ctx.beginPath();
+      ctx.moveTo(W / 2, y - 7); ctx.lineTo(W / 2 + 5, y); ctx.lineTo(W / 2, y + 7); ctx.lineTo(W / 2 - 5, y);
+      ctx.closePath();
+      ctx.fill();
+
+      // Small dots
+      [-60, -45, -30, 30, 45, 60].forEach(dx => {
+        ctx.beginPath();
+        ctx.arc(W / 2 + dx, y, 2, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.restore();
+    }
+
+    function drawBottomBand(ctx, W, H, T) {
+      const y = H - 120;
+      const grad = ctx.createLinearGradient(0, y, 0, H);
+      grad.addColorStop(0, 'transparent');
+      grad.addColorStop(0.3, `rgba(0,0,0,0.4)`);
+      grad.addColorStop(1, `rgba(0,0,0,0.6)`);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, y, W, H - y);
+
+      // Islamic geometric pattern strip
+      ctx.save();
+      ctx.strokeStyle = `rgba(212,175,55,0.25)`;
+      ctx.lineWidth = 1;
+      for (let gx = 0; gx < W; gx += 32) {
+        ctx.beginPath();
+        ctx.moveTo(gx, y); ctx.lineTo(gx + 16, y + 20); ctx.lineTo(gx + 32, y);
+        ctx.moveTo(gx, y + 20); ctx.lineTo(gx + 16, y); ctx.lineTo(gx + 32, y + 20);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawLanterns(ctx, W, H, gold) {
+      // Simple lantern shapes
+      [[80, H - 200], [W - 80, H - 200]].forEach(([lx, ly]) => {
+        ctx.save();
+        ctx.fillStyle = `rgba(212,175,55,0.15)`;
+        ctx.strokeStyle = `rgba(212,175,55,0.4)`;
+        ctx.lineWidth = 1.5;
+
+        // String
+        ctx.beginPath(); ctx.moveTo(lx, ly - 50); ctx.lineTo(lx, ly - 20); ctx.stroke();
+
+        // Top cap
+        ctx.beginPath(); ctx.ellipse(lx, ly - 20, 18, 6, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+
+        // Body
+        ctx.beginPath();
+        ctx.moveTo(lx - 16, ly - 15); ctx.lineTo(lx - 22, ly + 30); ctx.lineTo(lx + 22, ly + 30); ctx.lineTo(lx + 16, ly - 15);
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+
+        // Ribs
+        ctx.strokeStyle = `rgba(212,175,55,0.25)`;
+        [-8, 0, 8].forEach(dx => {
+          ctx.beginPath(); ctx.moveTo(lx + dx * 0.7, ly - 14); ctx.lineTo(lx + dx, ly + 30); ctx.stroke();
+        });
+
+        // Bottom cap
+        ctx.beginPath(); ctx.ellipse(lx, ly + 30, 22, 7, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+
+        // Glow
+        const g = ctx.createRadialGradient(lx, ly + 8, 0, lx, ly + 8, 30);
+        g.addColorStop(0, 'rgba(255,200,50,0.2)');
+        g.addColorStop(1, 'transparent');
+        ctx.fillStyle = g; ctx.fillRect(lx - 30, ly - 10, 60, 50);
+
+        ctx.restore();
+      });
+    }
+
+    // ── Actions ───────────────────────────────────────────────────────────────────
+    function downloadCard() {
+      if (!isGenerated) { generateCard(); }
+      const canvas = document.getElementById('eidCanvas');
+      const link = document.createElement('a');
+      link.download = 'eid-mubarak-card.png';
+      link.href = canvas.toDataURL('image/png', 1.0);
+      link.click();
+      showToast('✅ কার্ড ডাউনলোড হচ্ছে!');
+    }
+
+    function saveToStorage() {
+      if (!isGenerated) { generateCard(); }
+      const canvas = document.getElementById('eidCanvas');
+      const dataURL = canvas.toDataURL('image/jpeg', 0.85);
+      const key = 'eid_card_' + Date.now();
+      try {
+        localStorage.setItem(key, dataURL);
+        showToast('💾 কার্ড সেভ হয়েছে!');
+        renderGallery();
+      } catch (e) {
+        showToast('⚠️ স্টোরেজ পূর্ণ হয়ে গেছে!');
+      }
+    }
+
+    function renderGallery() {
+      const grid = document.getElementById('galleryGrid');
+      const keys = Object.keys(localStorage).filter(k => k.startsWith('eid_card_')).sort().reverse();
+      if (keys.length === 0) {
+        grid.innerHTML = '<div class="empty-gallery">এখনো কোনো কার্ড সেভ করা হয়নি</div>';
+        return;
+      }
+      grid.innerHTML = keys.map(k => `
+    <div class="gallery-item" onclick="loadCard('${k}')">
+      <img src="${localStorage.getItem(k)}" alt="saved card">
+      <button class="del-btn" onclick="event.stopPropagation(); deleteCard('${k}')">✕</button>
+    </div>
+  `).join('');
+    }
+
+    function loadCard(key) {
+      const data = localStorage.getItem(key);
+      if (!data) return;
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.getElementById('eidCanvas');
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      };
+      img.src = data;
+      showToast('📋 কার্ড লোড হয়েছে');
+    }
+
+    function deleteCard(key) {
+      localStorage.removeItem(key);
+      renderGallery();
+      showToast('🗑️ কার্ড মুছে ফেলা হয়েছে');
+    }
+
+    function clearAll() {
+      const keys = Object.keys(localStorage).filter(k => k.startsWith('eid_card_'));
+      if (keys.length === 0) { showToast('কোনো কার্ড নেই'); return; }
+      if (confirm(`সব ${keys.length}টি কার্ড মুছে ফেলবেন?`)) {
+        keys.forEach(k => localStorage.removeItem(k));
+        renderGallery();
+        showToast('🗑️ সব কার্ড মুছে ফেলা হয়েছে');
+      }
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // ── Init ──────────────────────────────────────────────────────────────────────
+    window.addEventListener('load', () => {
+      generateCard();
+      renderGallery();
+    });
+  </script>
+</body>
+
+</html>

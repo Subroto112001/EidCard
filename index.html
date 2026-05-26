@@ -4,9 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="Custom Eid greeting card maker — upload a photo, customize message and download your card.">
-  <link rel="icon" href="favicon.ico">
   <title>ঈদ কার্ড মেকার</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Noto+Serif+Bengali:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap"
@@ -505,7 +502,6 @@
     /* Range input styling */
     input[type="range"] {
       -webkit-appearance: none;
-      appearance: none;
       width: 100%;
       height: 4px;
       background: rgba(212, 175, 55, 0.3);
@@ -516,7 +512,6 @@
 
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      appearance: none;
       width: 16px;
       height: 16px;
       background: var(--gold);
@@ -524,7 +519,7 @@
       cursor: pointer;
     }
 
-    /* Footer branding (non-sticky) */
+    /* Footer branding */
     .site-footer {
       display: block;
       margin: 18px auto 10px;
@@ -558,7 +553,7 @@
     <!-- Header -->
     <header class="site-header">
       <div class="gold-divider"></div>
-      <h1>✦ ঈদ কার্ড মেকার ✦</h1>
+      <h1>✦ ঈদ কার্ড ✦</h1>
       <p>আপনার ছবি দিয়ে তৈরি করুন বিশেষ ঈদ শুভেচ্ছাকার্ড</p>
       <div class="gold-divider"></div>
     </header>
@@ -572,7 +567,7 @@
         <div class="panel-section">
           <div class="section-label">ছবি আপলোড করুন</div>
           <div class="upload-zone" id="uploadZone">
-            <input type="file" id="photoInput" accept="image/*" aria-label="Upload photo" />
+            <input type="file" id="photoInput" accept="image/*">
             <div class="upload-icon">🖼️</div>
             <strong>ছবি বেছে নিন</strong>
             <p>অথবা এখানে ড্র্যাগ করুন</p>
@@ -614,10 +609,10 @@
         </div>
 
         <div class="panel-section">
-          <button class="btn-primary" onclick="generateCard()" aria-label="Generate card">✦ কার্ড তৈরি করুন</button>
-          <button class="btn-secondary" onclick="downloadCard()" aria-label="Download card">⬇ কার্ড ডাউনলোড
+          <button class="btn-primary" onclick="generateCard()">✦ কার্ড তৈরি করুন</button>
+          <button class="btn-secondary" onclick="downloadCard()">⬇ কার্ড ডাউনলোড
             করুন</button>
-          <button class="btn-secondary" style="margin-top:8px;" onclick="saveToStorage()" aria-label="Save card">💾
+          <button class="btn-secondary" style="margin-top:8px;" onclick="saveToStorage()">💾
             কার্ড সেভ করুন</button>
         </div>
 
@@ -652,7 +647,7 @@
   <!-- Footer branding -->
   <footer class="site-footer">
     <a href="https://skbarman.me/" target="_blank" rel="noopener noreferrer">Subroto Kumar Barman — FullStack developer
-      — skbarman.me</a>
+    </a>
   </footer>
 
   <script>
@@ -722,16 +717,6 @@
       const canvas = document.getElementById('eidCanvas');
       const ctx = canvas.getContext('2d');
       const W = 800, H = 1000;
-      // make canvas DPI-aware for crisp rendering on high-DPI screens
-      const dpr = Math.max(1, window.devicePixelRatio || 1);
-      if (canvas._lastDpr !== dpr || canvas.width !== W * dpr || canvas.height !== H * dpr) {
-        canvas._lastDpr = dpr;
-        canvas.width = Math.round(W * dpr);
-        canvas.height = Math.round(H * dpr);
-        canvas.style.width = W + 'px';
-        canvas.style.height = H + 'px';
-      }
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const T = themes[currentTheme];
 
       ctx.clearRect(0, 0, W, H);
